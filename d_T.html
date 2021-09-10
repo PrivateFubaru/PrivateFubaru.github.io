@@ -1,0 +1,106 @@
+<style>
+      body{
+        background: #202028;
+        color:#fff;
+        font-family:sans-serif;
+        font-size: 20px;
+        
+        text-align: center;
+        top: 50;
+  
+      }
+      canvas{
+        border:solid .2em #fff;
+      }
+     h1{
+	padding: 15;
+	
+     }
+     div{
+	padding: 2;
+     }
+    </style>
+<script>
+
+</script>
+
+<body>
+	<h1 id="title">ДМБ</h1>
+	<h1 onclick=switchMode() > DATE </h1>
+	<h2 onclick=switchMode() > DATE </h2>
+	<div id="watch" onmouseenter = highlight()> HEY </div>
+	<canvas id="meter" width="500" height="50"></canvas>
+
+<script> 
+var view_mode = 0;
+function highlight()
+{
+	document.getElementById("watch").innerText.style="outline: solid 5px #fff;"
+}
+function switchMode() {
+	if(view_mode >= 2){
+		view_mode = 0;
+	} else {	
+		++view_mode;
+	}
+}
+function update (){
+
+	var current_date = new Date();
+	var dmb_date = new Date();
+	dmb_date.setYear(2021);
+	dmb_date.setMonth(11);
+	dmb_date.setDate(9);
+
+	var days = dmb_date - current_date;
+
+
+	var days_left  = ((((days / 1000) / 60)  / 60) / 24).toFixed().toString();
+	var minutes = (60 - current_date.getMinutes()).toFixed().toString();
+	var hours = (24 - current_date.getHours()).toFixed().toString();
+	var seconds = (60 - current_date.getSeconds()).toFixed().toString();
+	var weeks = (days_left / 7).toFixed().toString(); 
+	var output = 0;
+	if(view_mode === 0){
+		// output = days_left + "'D " + hours + "'H " + minutes + "'M " + seconds + "'S ";
+		//   output = days_left + " D " + hours + " H " + minutes + " M " + seconds + " S ";
+		output = days_left + " Days";
+	}
+
+	if(view_mode === 1){
+		//output = weeks + " Weeks" + (7 - current_date.getDay()) + " days ";
+		output = weeks + " Weeks" ;
+	}
+
+
+	if(view_mode === 2){
+		output = 365 - days_left + "'D " + current_date.getHours() + "'H " + current_date.getMinutes() + "'M " + current_date.getSeconds() + "'S ";
+	}
+
+	//document.getElementById("watch").innerText = output;
+	
+	document.getElementsByTagName("h1")[1].innerText = output;
+	document.getElementsByTagName("h2")[0].innerText = hours + ":" + minutes + ":" + seconds + "";
+
+	var canvas = document.getElementById("meter");
+	var canvas_context = canvas.getContext('2d');
+	
+	let year_milliseconds = 365 * 24 * 60 * 60 * 1000;
+	let progress = (year_milliseconds - days);
+	let percentage = (progress * 100) / year_milliseconds;
+	document.getElementById("watch").innerText = percentage.toFixed(5) + "%";
+
+
+	canvas_context.fillStyle = "#00ff00"	
+	canvas_context.fillRect(0, 0, ((500/100)*percentage), 50);
+
+
+	requestAnimationFrame(update)
+
+}
+
+update()
+</script>
+</body>
+
+
