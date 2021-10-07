@@ -60,9 +60,9 @@ function update (){
 
 
 	var days_left  = ((((days / 1000) / 60)  / 60) / 24).toFixed().toString();
-	var minutes = (60 - current_date.getMinutes()).toFixed().toString();
-	var hours = (24 - current_date.getHours()).toFixed().toString();
-	var seconds = (60 - current_date.getSeconds()).toFixed().toString();
+	var minutes = (59 - current_date.getMinutes()).toFixed().toString();
+	var hours = (23 - current_date.getHours()).toFixed().toString();
+	var seconds = (59 - current_date.getSeconds()).toFixed().toString();
 	var weeks = (days_left / 7).toFixed().toString(); 
 	var output = 0;
 	if(view_mode === 0){
