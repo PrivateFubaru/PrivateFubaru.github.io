@@ -59,7 +59,7 @@ function update (){
 	var days = dmb_date - current_date;
 
 
-	var days_left  = ((((days / 1000) / 60)  / 60) / 24).toFixed().toString();
+	var days_left  = (((((days / 1000) / 60)  / 60) / 24)-1).toFixed().toString();
 	var minutes = (59 - current_date.getMinutes()).toFixed().toString();
 	var hours = (23 - current_date.getHours()).toFixed().toString();
 	var seconds = (59 - current_date.getSeconds()).toFixed().toString();
